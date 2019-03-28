@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="c2fae376-0460-4bcc-9a9c-9daa2019494c">
+  <descriptionCdata><![CDATA[c2fae376-0460-4bcc-9a9c-9daa2019494c.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>c2fae376-0460-4bcc-9a9c-9daa2019494c.description</annotation>
+  <name>Approval Decision</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="e2f86994-0113-43dc-aa7d-23e76c316c61">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>APPROVAL_DECISION</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <link>
+        <refId>371c7331-0c11-4304-b15a-fd98f807517c</refId>
+        <refName>PSLAB Approval</refName>
+      </link>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="4f8e2cc1-804d-4665-900e-82b3681aeaa9">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>true</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>REASON</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="1f0b58c6-e524-4081-9110-cb4d4af73191">
+    <annotation></annotation>
+    <name>Operation Approval Decision (c2fae376-0460-4bcc-9a9c-9daa2019494c)</name>
+    <script>scriptletResponse=APPROVAL_DECISION;</script>
+    <type>NASHORN</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="40356b39-f5fe-487f-99d9-53b52ba219cc">
+      <annotation></annotation>
+      <name>APPROVED</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="ec9e11ca-ad52-452d-95fc-010ec38d39ba">
+      <annotation></annotation>
+      <name>REJECTED</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="4fe6c063-0b6f-477d-bfd8-b0aa8b23c8e6">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="675ad443-d9b9-4cac-be18-5ef61f0c41a0">
+    <baseIcon>display_report.png</baseIcon>
+    <basePath>Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

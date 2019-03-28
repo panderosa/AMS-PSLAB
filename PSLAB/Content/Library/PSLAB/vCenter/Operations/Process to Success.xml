@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="b2cdfae4-9052-4e62-bedf-08450d139028">
+  <descriptionCdata><![CDATA[b2cdfae4-9052-4e62-bedf-08450d139028.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>b2cdfae4-9052-4e62-bedf-08450d139028.description</annotation>
+  <name>Process to Success</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="b5be9579-4046-4830-938b-7f9cef284563">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="37dc873f-f979-4b85-b1c3-acd9e37d386e">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="15fc56d6-415d-4be5-b288-35f700eb90e9">
+    <baseIcon>display_report.png</baseIcon>
+    <basePath>Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

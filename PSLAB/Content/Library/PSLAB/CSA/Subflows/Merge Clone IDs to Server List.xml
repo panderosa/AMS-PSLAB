@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="872074ec-85e9-40f5-965e-894092e1257d">
+  <descriptionCdata><![CDATA[872074ec-85e9-40f5-965e-894092e1257d.693ffa6a-0395-4574-be6b-3f6092a20858.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Merge Clone IDs to Server List</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="8cad6ee5-61fc-4891-875f-ffd5c22ca41f">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>serverList</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+    <userInputBinding id="f9650fa2-336f-4382-8b26-df6b1b2b7859">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>clonedServers</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="3bbdb37b-2d29-44a3-8950-d4f8070b5473">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="3539c4b6-6479-4df6-a227-f55e66561cad">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="94217216-5445-4107-ad14-06207fa071d9">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="bf4bf75d-c2a3-43fe-b4b7-419ab2cb0fd6">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="693ffa6a-0395-4574-be6b-3f6092a20858">
+      <annotation>872074ec-85e9-40f5-965e-894092e1257d.693ffa6a-0395-4574-be6b-3f6092a20858.description</annotation>
+      <name>Merging Clone IDs</name>
+      <bounds>
+        <x>188.0</x>
+        <y>192.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <iconSpec id="fa4b64ec-40d8-4cb1-bed0-725c6eb24be6">
+        <baseIcon>astrologer.png</baseIcon>
+        <basePath>/Others/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="a7d4ed82-386e-43e4-9df0-fbe01745d741">
+        <annotation></annotation>
+        <name>Step Merging Clone IDs in Flow Merge Clone IDs to Server List (693ffa6a-0395-4574-be6b-3f6092a20858)</name>
+        <script>try {
+	var cs = JSON.parse(clonedServers);
+	var sl = JSON.parse(serverList);
+	
+	var srvs = Object.keys(sl);
+	var serversCount = srvs.length;
+
+	var cloneIDs = Object.keys(cs);
+	cloneIDs.sort(function(a,b) {	
+		if(cs[a].displayName &lt; cs[b].displayName) {
+			return -1;
+		}
+		else if(cs[a].displayName &gt; cs[b].displayName) {
+			return 1;
+		}
+		else {
+			return 0;
+		}	
+	});
+	var csSize = cloneIDs.length;
+
+	if(serversCount == csSize) {
+		srvs.forEach(function(i) {
+			var tmp = sl[i];
+			tmp[&apos;cloneId&apos;] = cloneIDs.shift();
+			sl[i] = tmp;
+		});
+	} 
+	else {
+		throw new Error(&quot;Number of cloned server components: &quot; + csSize + &quot; differs from server list retrieved from ENA_ACTIVE_LAB table: &quot; + serversCount);
+	}
+	
+	scriptletContext.put(&quot;serverList&quot;,JSON.stringify(sl));
+	scriptletResponse = &quot;success&quot;;
+}
+catch(error) {
+	scriptletContext.put(&quot;FailureMessage&quot;,error);
+	scriptletResponse = &quot;failure&quot;;
+}
+
+</script>
+        <type>NASHORN</type>
+      </scriptlet>
+      <bindings>
+        <userInputBinding id="e5f4a9fc-417b-46f3-be0e-f32f8ef3fe1a">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>serverList</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt></prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+        <userInputBinding id="fe7e12ff-aec9-49d8-adb3-33104e6a8f62">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>clonedServers</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt></prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+      </bindings>
+      <transitions>
+        <transition id="30c44b68-3d25-4fcd-935b-b4f47340ce3c">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>c43655e9-2caf-4cc9-8db3-5329d1446f84</refId>
+          </destination>
+          <source>
+            <refId>693ffa6a-0395-4574-be6b-3f6092a20858</refId>
+          </source>
+          <positions>
+            <point>
+              <x>313.0</x>
+              <y>222.0</y>
+            </point>
+            <point>
+              <x>512.0</x>
+              <y>321.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="387128aa-8a05-45d2-81f3-00c093f86e8b">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>968cf764-6550-43dd-8c84-4deee6f07a07</refId>
+          </destination>
+          <source>
+            <refId>693ffa6a-0395-4574-be6b-3f6092a20858</refId>
+          </source>
+          <positions>
+            <point>
+              <x>313.0</x>
+              <y>222.0</y>
+            </point>
+            <point>
+              <x>516.0</x>
+              <y>155.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>e46b91b4-6637-4b3d-883a-e86436d9eb3a</refId>
+      </opRef>
+      <assignments/>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="968cf764-6550-43dd-8c84-4deee6f07a07">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>466.0</x>
+        <y>121.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="38f0dc6b-0bc8-4c09-b2e9-51f6c38b913c">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>FailureMessage</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="39641b2c-4479-499c-9186-d1bb21d9ab6f">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>968cf764-6550-43dd-8c84-4deee6f07a07</refId>
+          </destination>
+          <source>
+            <refId>968cf764-6550-43dd-8c84-4deee6f07a07</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments>
+        <flowVariableAssignment id="bcbfee54-fa89-474f-a777-c50b64f64e00">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>FailureMessage</contextKey>
+          <expression id="172412a1-17ce-41b4-905c-67563c13ec6a">
+            <annotation></annotation>
+            <name>Input: FailureMessage</name>
+            <fieldName>FailureMessage</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+    </returnStep>
+    <returnStep id="c43655e9-2caf-4cc9-8db3-5329d1446f84">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>462.0</x>
+        <y>287.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="a25e4918-e520-4e7e-b986-c390aee9b7f3">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>serverList</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="6618fb36-349a-4582-aae4-f111da0623be">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>c43655e9-2caf-4cc9-8db3-5329d1446f84</refId>
+          </destination>
+          <source>
+            <refId>c43655e9-2caf-4cc9-8db3-5329d1446f84</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments>
+        <flowVariableAssignment id="7b439aca-c4e9-47c6-ae66-694948ade3d3">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>serverList</contextKey>
+          <expression id="07a9a298-3400-4430-bd97-cd5f85879140">
+            <annotation></annotation>
+            <name>Input: serverList</name>
+            <fieldName>serverList</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+    </returnStep>
+  </steps>
+  <startSteps>693ffa6a-0395-4574-be6b-3f6092a20858</startSteps>
+</flow>

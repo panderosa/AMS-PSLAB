@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="1f347d69-2960-4e00-9a36-77fce63fb0da">
+  <descriptionCdata><![CDATA[1f347d69-2960-4e00-9a36-77fce63fb0da.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>1f347d69-2960-4e00-9a36-77fce63fb0da.description</annotation>
+  <name>JSON to SQL</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="2d817fa4-f9bc-4ba1-a40d-5ce6969ce3ec">
+      <annotation></annotation>
+      <name>select</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="5e47bd94-37df-41b1-bd77-72f40dbbeaad">
+      <annotation></annotation>
+      <name>update</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="580ece84-60a2-4757-9d1d-15411ef52927">
+      <annotation></annotation>
+      <name>insert</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="f4d99678-0115-4602-93fc-b92a2e2eb71b">
+      <annotation></annotation>
+      <name>delete</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="8bffa063-3408-4797-813a-36dbaa1d449a">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="b6eb40f1-c689-4d8f-a05a-372d1e3bc4e4">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="6d83eea5-1ee7-4ec0-abcb-3a6519cd836c">
+    <baseIcon>display_report.png</baseIcon>
+    <basePath>Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

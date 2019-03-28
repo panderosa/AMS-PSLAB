@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selectionList id="2564ff65-a0c1-4222-90f3-5dbf0d206668">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>PSLAB programNames</name>
+  <storage>
+    <string>CDF Lab weeks</string>
+    <string>HCM Bootcamp</string>
+    <string>CDF Enablement</string>
+    <string>CMT-DACH</string>
+    <string>CMT-NORTH</string>
+    <string>CMT-SOUTH</string>
+  </storage>
+</selectionList>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="7ad4070b-95fb-4052-adbe-e6ee8a84834d">
+  <descriptionCdata><![CDATA[7ad4070b-95fb-4052-adbe-e6ee8a84834d.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>7ad4070b-95fb-4052-adbe-e6ee8a84834d.description</annotation>
+  <name>IPAM - DHCP</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="a2ca4779-d3b7-42cb-b146-cdc521eb7b95">
+      <annotation></annotation>
+      <name>IPAM</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="f3ea5066-f193-4e88-9801-72ec52cd39fe">
+      <annotation></annotation>
+      <name>DHCP</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="0190cf76-3e77-4494-aaec-6c497b33a2b9">
+      <annotation></annotation>
+      <name>undefined</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="e015a134-3d89-4fbc-b3cb-219d554e982a">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="821c3f4b-e9b2-4ae0-9fb3-2f4537efb01a">
+    <baseIcon>display_report.png</baseIcon>
+    <basePath>Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

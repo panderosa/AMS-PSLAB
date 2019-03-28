@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptlet id="a0ca15be-d3a7-446b-9859-27f2d1fe4f04">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Process VCenter Properties</name>
+  <script>try {	
+	vrf(clusterName);
+	vrf(dataCenter);
+	vrf(dataStore);
+	vrf(resourcePool);
+	vrf(vmFolder);
+
+	var servers = JSON.parse(serverList);
+	var p = JSON.parse(groupProperties);
+	var program = p.programName;
+	var suffix = mapToVM(program);
+	
+	var resourcePool = resourcePool + &quot;/&quot; + suffix;
+	var vmFolder = vmFolder + &quot;/&quot; + suffix;
+	
+	// Take server names: s1, s2, s3,...
+	var sn = Object.keys(servers);
+	
+	sn.filter(function(s){
+		return servers[s].enabled == &quot;true&quot;;
+	}).forEach(function(s) {
+		var props = servers[s];
+		props[&apos;clusterName&apos;] = clusterName;
+		props[&apos;dataCenter&apos;] = dataCenter;
+		props[&apos;dataStore&apos;] = dataStore;
+		props[&apos;resourcePool&apos;] = resourcePool;
+		props[&apos;vmFolder&apos;] = vmFolder;
+		servers[s] = props;
+	});
+
+	servers = JSON.stringify(servers);
+	scriptletContext.put(&quot;serverList&quot;,servers);
+	scriptletResult = servers;
+	scriptletResponse = &quot;success&quot;;
+
+}
+catch(error) {
+	scriptletContext.put(&quot;FailureMessage&quot;,error);
+	scriptletResponse = &quot;failure&quot;;
+}
+
+function vrf(string) {
+	if( string != null &amp;&amp; string != undefined &amp;&amp; string.trim() != &quot;&quot; ) {
+		return true;
+	}
+	else {
+		throw new Error(&quot;VC System Property is undefined or empty&quot;);
+	}
+}
+
+function mapToVM(p) {
+	var map = {
+		&quot;CDF Lab weeks&quot;: &quot;CDF-LabWeeks&quot;,
+		&quot;HCM Bootcamp&quot;: &quot;HCM-Bootcamp&quot;,
+		&quot;CDF Enablement&quot;: &quot;CDF-Suite-Labs&quot;,
+		&quot;CMT-DACH&quot;: &quot;CDF-Suite-Labs&quot;,
+		&quot;CMT-NORTH&quot;: &quot;CDF-Suite-Labs&quot;,
+		&quot;CMT-SOUTH&quot;: &quot;CDF-Suite-Labs&quot;,
+	};
+	return map[p];
+}
+</script>
+  <type>NASHORN</type>
+</scriptlet>

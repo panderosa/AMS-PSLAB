@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptlet id="9aeacc4a-172b-4725-a5a3-bd33fa3d9ad3">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Precheck publicKey</name>
+  <script>if(publicKey.trim() != &quot;&quot;) {
+	scriptletResponse=&quot;continue&quot;;
+}
+else {
+	scriptletResponse=&quot;skip&quot;;
+	scriptletContext.putGlobal(&quot;processStatus&quot;,&quot;SSH Key is not set on server component. Skip installing.&quot;);
+}</script>
+  <type>NASHORN</type>
+</scriptlet>

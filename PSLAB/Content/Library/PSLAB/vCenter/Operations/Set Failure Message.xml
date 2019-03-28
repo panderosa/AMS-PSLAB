@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="5197cf0c-c0a8-41b5-9429-6cf6f2cbaae4">
+  <descriptionCdata><![CDATA[5197cf0c-c0a8-41b5-9429-6cf6f2cbaae4.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>5197cf0c-c0a8-41b5-9429-6cf6f2cbaae4.description</annotation>
+  <name>Set Failure Message</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="beb2baea-df53-4f90-95d2-0782b958fbd8">
+      <annotation></annotation>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>CustomMessage</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="85489be6-1817-418e-bd7f-ca5fbfb2e01d">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>FailureMessage</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="cfe0b57d-0869-435f-b19a-98e7d8974889">
+    <annotation></annotation>
+    <name>Operation Set Failure Message (5197cf0c-c0a8-41b5-9429-6cf6f2cbaae4)</name>
+    <script>if(FailureMessage.trim().length == 0) {
+	scritpletContext.put(&quot;FailureMessage&quot;,&quot;CustomMessage&quot;);
+}
+scriptletResponse=&quot;diagnosed&quot;;</script>
+    <type>NASHORN</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="248e90ee-47bc-43a0-916b-7b69088b00f6">
+      <annotation></annotation>
+      <name>diagnosed</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>DIAGNOSED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="061a7d76-4830-4c86-91bb-099816f7f4b0">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="c6312448-6d72-4f3b-aa39-e4e50110a16c">
+    <baseIcon>display_report.png</baseIcon>
+    <basePath>Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

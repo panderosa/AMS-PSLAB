@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="50f7c77f-97d2-4cdb-82ab-1b05b11f344f">
+  <descriptionCdata><![CDATA[50f7c77f-97d2-4cdb-82ab-1b05b11f344f.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>50f7c77f-97d2-4cdb-82ab-1b05b11f344f.description</annotation>
+  <name>Approval with Validation</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="1d82109c-4a78-4ff3-8f09-9ddb39abed0c">
+      <annotation></annotation>
+      <name>Approved</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="40012cd5-128c-4990-9529-31e25d3127f0">
+      <annotation></annotation>
+      <name>Rejected</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="d88fdec1-ea03-454a-8791-0b5f0acfcf60">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="ec1a430f-f985-4dd5-afac-f7eacd280102">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="bb652fa2-dad8-43a9-838e-5f4883dda6aa">
+    <baseIcon>group.png</baseIcon>
+    <basePath>/Operating System/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

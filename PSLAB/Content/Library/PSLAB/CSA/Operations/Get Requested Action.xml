@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="f2157a6b-70f2-4c96-81eb-63ee10d19112">
+  <descriptionCdata><![CDATA[f2157a6b-70f2-4c96-81eb-63ee10d19112.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>f2157a6b-70f2-4c96-81eb-63ee10d19112.description</annotation>
+  <name>Get Requested Action</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="519de607-422b-407b-8276-d7a1f1d05938">
+      <annotation></annotation>
+      <name>ORDER</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="85cae986-960b-4535-85cd-4c52021482f7">
+      <annotation></annotation>
+      <name>MODIFY_SUBSCRIPTION</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="a742c0e5-93a9-4852-8974-0874c9757a55">
+      <annotation></annotation>
+      <name>OTHER</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="4cd1aa1c-be96-46c5-afeb-42f44d4814e7">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="28dcbfb8-ae9b-4c62-b21d-c28be8f220e2">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="9225b837-44d5-4d8d-9b9d-3ee5b1a1686a">
+    <baseIcon>display_report.png</baseIcon>
+    <basePath>Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>

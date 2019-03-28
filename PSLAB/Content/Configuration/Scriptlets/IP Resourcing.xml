@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptlet id="2acb00a4-ea31-44ba-a050-41051b17b669">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>IP Resourcing</name>
+  <script>try {
+	if(resourcing == &quot;DHCP&quot; || resourcing == &quot;IPAM&quot;)
+		scriptletResponse = resourcing;
+	else {
+		throw new Error(&quot;Property resourcing is undefined or misconfigured. Value:&quot; + resourcing);
+	}
+}
+catch(error) {
+	scriptletContext.put(&quot;FailureMessage&quot;,error);
+	scriptletResponse = &quot;undefined&quot;;
+}</script>
+  <type>NASHORN</type>
+</scriptlet>

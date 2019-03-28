@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="0a14d98b-f61b-4a2a-91eb-c123b7dc708c">
+  <descriptionCdata><![CDATA[0a14d98b-f61b-4a2a-91eb-c123b7dc708c.2c9bd44a-31c0-45a9-8549-60007df96928.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Validate Input Keys</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="6c76d3b7-2f4b-439e-ad72-5d7dcc07fb8e">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>SSH_KEY_ARRAY</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="0801f0ee-891e-43af-82a3-fd6c5cc6a8eb">
+      <annotation></annotation>
+      <name>process</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="5e7e4002-ed16-49bb-9770-234fa6e5e34c">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="a941cdfe-6e81-4c96-8451-2b85e2dcd559">
+      <annotation></annotation>
+      <name>no key</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="49b237ca-9306-4047-aa32-9596b8924f4c">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="958cb73e-f93b-46f2-8f0a-0ca5bd59c1c3">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="2c9bd44a-31c0-45a9-8549-60007df96928">
+      <annotation>0a14d98b-f61b-4a2a-91eb-c123b7dc708c.2c9bd44a-31c0-45a9-8549-60007df96928.description</annotation>
+      <name>Validate</name>
+      <bounds>
+        <x>192.0</x>
+        <y>291.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="814d2d3f-003c-4ce6-8536-fe720ebdbd5d">
+        <annotation></annotation>
+        <name>Step Validate in Flow Validate Input Keys (2c9bd44a-31c0-45a9-8549-60007df96928)</name>
+        <script>try {
+	var array = JSON.parse(SSH_KEY_ARRAY);
+	
+	var newArray = array.filter(function(i) {
+		var key = scriptletContext.get(i);
+		return isValid(key);
+	});
+	
+	if(newArray.length &gt; 0) {
+		scriptletContext.put(&quot;SSH_KEY_ARRAY&quot;,JSON.stringify(newArray));
+		scriptletResponse=&quot;process&quot;;
+	}
+	else {
+		scriptletResponse=&quot;no key&quot;;
+	}
+		
+}
+catch(e) {
+	scriptletResponse=&quot;failure&quot;;
+	scriptletContext.put(&quot;FailureMessage&quot;,e.stack);
+}
+
+
+function isValid(key) {
+    var Base64 = Java.type(&quot;java.util.Base64&quot;);
+    var X509EncodedKeySpec = Java.type(&quot;java.security.spec.X509EncodedKeySpec&quot;);
+    var KeyFactory = Java.type(&quot;java.security.KeyFactory&quot;);
+    var PublicKey = Java.type(&quot;java.security.PublicKey&quot;);        
+    try {
+            key = key.replace(/-+BEGIN PUBLIC KEY-+|-+END PUBLIC KEY-+/mg,&quot;&quot;); 
+            var keyBytes = Base64.getMimeDecoder().decode(key);
+            var spec = new X509EncodedKeySpec(keyBytes);
+            var factory = KeyFactory.getInstance(&quot;RSA&quot;);
+            var publicKey = factory.generatePublic(spec);
+            return publicKey.getAlgorithm() === &quot;RSA&quot;;       
+        }
+     catch(e) {
+            FailureMessage = e;
+            return false;
+     }
+}</script>
+        <type>NASHORN</type>
+      </scriptlet>
+      <bindings>
+        <staticBinding id="dce21754-206a-4fec-a689-8f9efe11d4f8">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>SSH_KEY_ARRAY</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="bc749103-7e6f-448b-9791-e303f1ff24a4">
+          <annotation></annotation>
+          <name>no key</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>no key</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>3414c1f8-7f3a-48af-912a-9eab5a301fce</refId>
+          </destination>
+          <source>
+            <refId>2c9bd44a-31c0-45a9-8549-60007df96928</refId>
+          </source>
+          <positions>
+            <point>
+              <x>242.0</x>
+              <y>325.0</y>
+            </point>
+            <point>
+              <x>396.0</x>
+              <y>85.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="f864c18c-b2c9-4bed-a4f3-278529c291da">
+          <annotation></annotation>
+          <name>process</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>process</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>03971769-c830-4b0f-bf26-9148269cf2c5</refId>
+          </destination>
+          <source>
+            <refId>2c9bd44a-31c0-45a9-8549-60007df96928</refId>
+          </source>
+          <positions>
+            <point>
+              <x>242.0</x>
+              <y>325.0</y>
+            </point>
+            <point>
+              <x>492.0</x>
+              <y>246.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="4f32c7cb-270d-4a90-afbb-79be3635ae50">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>375d486b-124a-4d7b-9a7e-4656729ef8c6</refId>
+          </destination>
+          <source>
+            <refId>2c9bd44a-31c0-45a9-8549-60007df96928</refId>
+          </source>
+          <positions>
+            <point>
+              <x>242.0</x>
+              <y>325.0</y>
+            </point>
+            <point>
+              <x>477.0</x>
+              <y>426.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>7bb89c53-cfd9-46a6-b332-43ab2265df9b</refId>
+      </opRef>
+      <assignments/>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="03971769-c830-4b0f-bf26-9148269cf2c5">
+      <annotation></annotation>
+      <name>Resolved : process</name>
+      <bounds>
+        <x>442.0</x>
+        <y>212.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="4ca5ab7f-02b5-4856-93c4-3abea32938c9">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>SSH_KEY_ARRAY</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="d3e023b4-9a4e-4d48-8a11-b363bac0d305">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>process</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>03971769-c830-4b0f-bf26-9148269cf2c5</refId>
+          </destination>
+          <source>
+            <refId>03971769-c830-4b0f-bf26-9148269cf2c5</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments>
+        <flowVariableAssignment id="cab7e1d0-bae5-4a7d-9344-d5a43afff12d">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>SSH_KEY_ARRAY</contextKey>
+          <expression id="133af522-1df9-43b2-a4b7-7671bfd2479f">
+            <annotation></annotation>
+            <name>Input: SSH_KEY_ARRAY</name>
+            <fieldName>SSH_KEY_ARRAY</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+    </returnStep>
+    <returnStep id="3414c1f8-7f3a-48af-912a-9eab5a301fce">
+      <annotation></annotation>
+      <name>No Action Taken : no key</name>
+      <bounds>
+        <x>346.0</x>
+        <y>51.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="3aacb110-5f06-4019-996e-e0a6442db70a">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>no key</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>3414c1f8-7f3a-48af-912a-9eab5a301fce</refId>
+          </destination>
+          <source>
+            <refId>3414c1f8-7f3a-48af-912a-9eab5a301fce</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>NO_ACTION_TAKEN</returnStepType>
+      <assignments/>
+    </returnStep>
+    <returnStep id="375d486b-124a-4d7b-9a7e-4656729ef8c6">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>427.0</x>
+        <y>392.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="4f640be7-8306-4492-84ab-527dd93c6178">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>FailureMessage</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="7d02cadf-4144-4ccc-839d-31b8f39701e5">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>375d486b-124a-4d7b-9a7e-4656729ef8c6</refId>
+          </destination>
+          <source>
+            <refId>375d486b-124a-4d7b-9a7e-4656729ef8c6</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments>
+        <flowVariableAssignment id="67c71072-8389-4cc4-ba44-d1a4fdab3669">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>FailureMessage</contextKey>
+          <expression id="7c1f771c-cab7-4239-b2cb-9fbf493bf7e8">
+            <annotation></annotation>
+            <name>Input: FailureMessage</name>
+            <fieldName>FailureMessage</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+    </returnStep>
+  </steps>
+  <startSteps>2c9bd44a-31c0-45a9-8549-60007df96928</startSteps>
+</flow>

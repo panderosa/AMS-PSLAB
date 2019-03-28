@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptlet id="ff6ad71f-6975-43b1-b043-294603512609">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Build XML For Updating Multiple Properties</name>
+  <script>try {
+	var pt = scriptletContext.get(&quot;RS_Previous_Transition&quot;);
+	switch(pt) {
+		case &quot;has more&quot;:
+			var xml;
+			if (XML != null &amp;&amp; XML != undefined &amp;&amp; XML.trim() != &quot;&quot;) {
+				xml = XML;
+			}
+			else {
+				xml = &quot;&quot;.concat(&quot;&lt;ServiceComponent&gt;&lt;id&gt;&quot;,componentId,&quot;&lt;/id&gt;&quot;);
+			}
+		
+			if(propertyValue != null &amp;&amp; propertyValue != undefined &amp;&amp; propertyValue.trim() != &quot;&quot;) {
+				xml = xml.concat(&quot;&lt;property&gt;&quot;);
+				xml = xml.concat(&quot;&lt;name&gt;&quot;,propertyName,&quot;&lt;/name&gt;&quot;);          
+				xml = xml.concat(&quot;&lt;valueType&gt;&lt;name&gt;&lt;/name&gt;&lt;/valueType&gt;&quot;);
+				xml = xml.concat(&quot;&lt;values&gt;&lt;value&gt;&quot;,propertyValue,&quot;&lt;/value&gt;&lt;/values&gt;&quot;);
+				xml = xml.concat(&quot;&lt;consumerVisible&gt;true&lt;/consumerVisible&gt;&quot;);
+				xml = xml.concat(&quot;&lt;/property&gt;&quot;);		
+				scriptletResponse = &quot;processed&quot;;
+				scriptletContext.put(&quot;XML&quot;,xml);
+				scriptletResult = xml;
+			} 
+			else {
+				scriptletResponse = &quot;skip&quot;;
+			}
+			break;
+		case &quot;no more&quot;:
+			var xml = XML;
+			xml = xml.concat(&quot;&lt;/ServiceComponent&gt;&quot;);
+			scriptletResponse = &quot;completed&quot;;
+			scriptletContext.put(&quot;XML&quot;,xml);
+			scriptletResult = xml;
+	}
+}
+catch(Error) {
+	scriptletContext.put(&quot;FailureMessage&quot;,Error);
+	sciptletResponse = &quot;failure&quot;;
+}</script>
+  <type>NASHORN</type>
+</scriptlet>

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="77907512-4247-4f58-a3ca-4e241646b88f">
+  <descriptionCdata><![CDATA[77907512-4247-4f58-a3ca-4e241646b88f.72dfa060-582c-4c12-b92e-ed0b5015c256.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Set IP Resourcing</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="41b56344-c025-4b80-95bb-8dcd71d1208a">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>groupProperties</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <possibleResponses>
+    <opResponse id="cd642e7b-f68f-48e7-aad7-9852f05f6748">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="5e282ea9-bf92-4346-afb2-f8826ec0b2ae">
+      <annotation></annotation>
+      <name>DHCP</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="ba96fec1-e111-446a-9aa7-4933bca0a4d6">
+      <annotation></annotation>
+      <name>IPAM</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>NO_ACTION_TAKEN</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="f08f8ace-d085-4fa9-9b91-1a02e9f8c6ca">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="5e6258bf-02b7-4a86-997f-eafe6c79267d">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="72dfa060-582c-4c12-b92e-ed0b5015c256">
+      <annotation>77907512-4247-4f58-a3ca-4e241646b88f.72dfa060-582c-4c12-b92e-ed0b5015c256.description</annotation>
+      <name>IP Resourcing</name>
+      <bounds>
+        <x>201.0</x>
+        <y>387.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <iconSpec id="fe530b97-3f9b-4e28-bead-e3de8c44d93e">
+        <baseIcon>display_report.png</baseIcon>
+        <basePath>Utilities/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <scriptlet id="e55b6241-e071-4db4-8889-2326d8df30d1">
+        <annotation></annotation>
+        <name>Step IP Resourcing in Flow Set IP Resourcing (72dfa060-582c-4c12-b92e-ed0b5015c256)</name>
+        <script>// update server list about customSpecification &amp; publicKey 
+
+try {
+	var groupProperties = JSON.parse(groupProperties);
+	
+	if(groupProperties.hasOwnProperty(&quot;resourcing&quot;)) {
+		scriptletResponse=groupProperties.resourcing;
+	}
+	else {
+		throw new Error(&quot;IP Resourcing Property on Server Group Component Is Not Set&quot;);
+	}
+}
+catch(Error) {
+	scriptletContext.put(&quot;FailureMessage&quot;,Error);
+	scriptletResponse=&quot;failure&quot;;
+}</script>
+        <type>NASHORN</type>
+      </scriptlet>
+      <bindings>
+        <userInputBinding id="7fba59be-5161-480d-92e6-5affb27728a9">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>groupProperties</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt></prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+      </bindings>
+      <transitions>
+        <transition id="0558e6a4-3ff9-466e-bb09-6e819392fa71">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>66962ee4-9ff3-423d-a6ef-b4d0aa8df1cb</refId>
+          </destination>
+          <source>
+            <refId>72dfa060-582c-4c12-b92e-ed0b5015c256</refId>
+          </source>
+          <positions>
+            <point>
+              <x>395.0</x>
+              <y>415.0</y>
+            </point>
+            <point>
+              <x>306.0</x>
+              <y>160.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="e9a70a27-8d71-4bba-b30f-3dab3dd101fd">
+          <annotation></annotation>
+          <name>IPAM</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>IPAM</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>2009021d-f393-46eb-a0cc-911a6f259a05</refId>
+          </destination>
+          <source>
+            <refId>72dfa060-582c-4c12-b92e-ed0b5015c256</refId>
+          </source>
+          <positions>
+            <point>
+              <x>251.0</x>
+              <y>421.0</y>
+            </point>
+            <point>
+              <x>505.0</x>
+              <y>233.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="49a9f43a-aba7-4f4f-bdef-a31be0b283fc">
+          <annotation></annotation>
+          <name>DHCP</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>DHCP</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>25449206-badc-420d-9547-64dd753ce63d</refId>
+          </destination>
+          <source>
+            <refId>72dfa060-582c-4c12-b92e-ed0b5015c256</refId>
+          </source>
+          <positions>
+            <point>
+              <x>251.0</x>
+              <y>421.0</y>
+            </point>
+            <point>
+              <x>490.0</x>
+              <y>479.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>2f3d5c8f-ef89-4dd0-b169-433a378f3e15</refId>
+      </opRef>
+      <assignments/>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="25449206-badc-420d-9547-64dd753ce63d">
+      <annotation></annotation>
+      <name>Resolved : DHCP</name>
+      <bounds>
+        <x>440.0</x>
+        <y>445.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="6f6ff284-8252-40ff-9022-946c06cb7c8a">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>DHCP</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>25449206-badc-420d-9547-64dd753ce63d</refId>
+          </destination>
+          <source>
+            <refId>25449206-badc-420d-9547-64dd753ce63d</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
+    <returnStep id="66962ee4-9ff3-423d-a6ef-b4d0aa8df1cb">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>174.0</x>
+        <y>123.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="16255b4d-67e6-4afa-ac33-e3ccb76d4e35">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>FailureMessage</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value></value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="52ec8dd9-f9c4-4e91-b592-f943feaca277">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>66962ee4-9ff3-423d-a6ef-b4d0aa8df1cb</refId>
+          </destination>
+          <source>
+            <refId>66962ee4-9ff3-423d-a6ef-b4d0aa8df1cb</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments>
+        <flowVariableAssignment id="178ff046-54d3-4125-aae5-f5a8cb0cf92a">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>FailureMessage</contextKey>
+          <expression id="d2f612af-bf59-4907-a2d9-283c21759de4">
+            <annotation></annotation>
+            <name>Input: FailureMessage</name>
+            <fieldName>FailureMessage</fieldName>
+            <sourceType>INPUT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+    </returnStep>
+    <returnStep id="2009021d-f393-46eb-a0cc-911a6f259a05">
+      <annotation></annotation>
+      <name>Resolved : IPAM</name>
+      <bounds>
+        <x>455.0</x>
+        <y>199.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="f65ddcbf-3c52-4a00-999a-521de02e6b98">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>IPAM</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>2009021d-f393-46eb-a0cc-911a6f259a05</refId>
+          </destination>
+          <source>
+            <refId>2009021d-f393-46eb-a0cc-911a6f259a05</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
+  </steps>
+  <startSteps>72dfa060-582c-4c12-b92e-ed0b5015c256</startSteps>
+</flow>

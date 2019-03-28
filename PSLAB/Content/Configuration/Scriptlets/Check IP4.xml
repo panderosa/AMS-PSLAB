@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptlet id="11ff95d4-8c22-4a88-9eac-e9a8e5de2916">
+  <descriptionCdata><![CDATA[]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Check IP4</name>
+  <script>var regex = new RegExp(&quot;^[0-9]{1,3}[.][0-9]{1,3}{1}[0-9]{1,3}{1}[0-9]{1,3}$&quot;);
+if(regex.test(ipAddress)) {
+	scriptletResponse = &quot;success&quot;;
+}
+else {
+	scriptletResponse = &quot;failure&quot;;
+}
+</script>
+  <type>NASHORN</type>
+</scriptlet>

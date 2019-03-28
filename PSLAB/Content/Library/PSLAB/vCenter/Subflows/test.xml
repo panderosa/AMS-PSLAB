@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="33c30ccc-4695-4b35-8192-509c24bc2008">
+  <descriptionCdata><![CDATA[33c30ccc-4695-4b35-8192-509c24bc2008.2e86bcda-f736-4d7f-8b4c-476dd900a046.description=<pre>Retrieves the current state of the task.\n\nInputs\: \nhost - The VMware host hostname or IP address.\nuser - The VMware username.\npassword - The VMware user's password. \nport - The Port to connect to the VMware server. \nprotocol - The connection protocol.The valid values are (http and https). \ncloseSession - Specifies whether to close the internally kept VMware Infrastructure API session when the operation completes. The valid values are (true and false).  \ntaskId - The task ID (for example, task-1234).\n\nResponses\:\nsuccess - The operation completed successfully.\nfailure - Something went wrong.\n\nReturns\:\nreturnResult - The task information.\ntaskInfo - The task information.\nUserName - The name of the user responsible for the task.\ndescriptionId - The type of the task.\ntaskState - The task state. ((The possible values are running, success, queued and error).\ntaskProgress - The task progress (The possible values are 0 to 100,inclusive).\ntaskSuccess - Specifies whether the task was successful.\ntaskError - The task error, if any.\ntaskResult - The task result.\ntaskCanceled - Specifies whether the task has been canceled. The possible values are (true and false).\ntaskCancelable - Specifies whether the task has been cancelable. </pre>
+33c30ccc-4695-4b35-8192-509c24bc2008.cf54ed59-d9b6-469d-866c-81d98062b428.prompt=Task ID\:
+33c30ccc-4695-4b35-8192-509c24bc2008.d04769f0-252a-404c-bb8f-306623533fd2.prompt=VMWare Host\:
+]]></descriptionCdata>
+  <annotation></annotation>
+  <name>test</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="8c2abef6-34bf-468e-8ac1-dd9af3d3f293">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="fcede965-f051-407d-be38-1ca6dfdaa9c3">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="f1dd8533-c2ea-410d-adea-c728fc6a76ee">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="582e143a-88f4-42d0-b212-c0ce9e507932">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="2e86bcda-f736-4d7f-8b4c-476dd900a046">
+      <annotation>33c30ccc-4695-4b35-8192-509c24bc2008.2e86bcda-f736-4d7f-8b4c-476dd900a046.description</annotation>
+      <name>Get Task State</name>
+      <bounds>
+        <x>312.0</x>
+        <y>263.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <userInputBinding id="d04769f0-252a-404c-bb8f-306623533fd2">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VCenter Host</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>host</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt>33c30ccc-4695-4b35-8192-509c24bc2008.d04769f0-252a-404c-bb8f-306623533fd2.prompt</prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+        <identityBinding id="befbf661-e0e6-4ed8-8ae3-bb145ec667ad">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey></fromContextKey>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>user</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>c9f7be19-8a4d-4d9d-8177-8b3acbdb924b</refId>
+            <refName>PSLAB VCenter Account</refName>
+          </link>
+          <identityAttribute>USERNAME</identityAttribute>
+        </identityBinding>
+        <identityBinding id="53144027-5808-4a75-baec-cba0c6c22a3e">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey></fromContextKey>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <recordKey></recordKey>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>false</isPersisted>
+          <inputSymbol>password</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>c9f7be19-8a4d-4d9d-8177-8b3acbdb924b</refId>
+            <refName>PSLAB VCenter Account</refName>
+          </link>
+          <identityAttribute>PASSWORD</identityAttribute>
+        </identityBinding>
+        <staticBinding id="0a392924-1905-40c1-ad11-3801e183c646">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VCenter Port</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>port</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>443</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="662dbc6c-401f-4aba-b662-f2e8bb4713f8">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VCenter Protocol</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>protocol</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>https</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="f7958c5f-e3ff-4551-8569-2dfb69841386">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>closeSession</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>true</value>
+          <record>false</record>
+        </staticBinding>
+        <userInputBinding id="cf54ed59-d9b6-469d-866c-81d98062b428">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey></fromContextKey>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>taskId</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt>33c30ccc-4695-4b35-8192-509c24bc2008.cf54ed59-d9b6-469d-866c-81d98062b428.prompt</prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+      </bindings>
+      <transitions>
+        <transition id="8c8e6854-33b5-4ac5-b123-ffe7a03dc686">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>33358b8d-4b5f-4a39-91ad-f8544c88b568</refId>
+          </destination>
+          <source>
+            <refId>2e86bcda-f736-4d7f-8b4c-476dd900a046</refId>
+          </source>
+          <positions>
+            <point>
+              <x>362.0</x>
+              <y>297.0</y>
+            </point>
+            <point>
+              <x>634.0</x>
+              <y>176.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="a5eca9c1-d9ed-4be7-99ca-60f51fb70e5a">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>d9bf9ca7-4ef5-4367-9ee4-739c6b469096</refId>
+          </destination>
+          <source>
+            <refId>2e86bcda-f736-4d7f-8b4c-476dd900a046</refId>
+          </source>
+          <positions>
+            <point>
+              <x>362.0</x>
+              <y>297.0</y>
+            </point>
+            <point>
+              <x>607.0</x>
+              <y>411.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>fdd4b4c6-8e5e-40cb-b9a1-3febcb7decdf</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="9a5a2f89-44a6-4b03-80f2-e276487ca0b9">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>taskError</contextKey>
+          <expression id="90e12df3-23b5-4ac6-b113-e8c591feebe2">
+            <annotation></annotation>
+            <name>Result Field: taskError</name>
+            <fieldName>taskError</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="7b5a03c5-800a-49f6-b5b8-12e6c6f77ef9">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>taskinfo</contextKey>
+          <expression id="08ade71e-7c0e-4075-8e03-123b590eada5">
+            <annotation></annotation>
+            <name>Result Field: taskInfo</name>
+            <fieldName>taskInfo</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="33358b8d-4b5f-4a39-91ad-f8544c88b568">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>584.0</x>
+        <y>142.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="cabff5c9-4f7d-4bfe-9248-35bc68468422">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>33358b8d-4b5f-4a39-91ad-f8544c88b568</refId>
+          </destination>
+          <source>
+            <refId>33358b8d-4b5f-4a39-91ad-f8544c88b568</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments/>
+    </returnStep>
+    <returnStep id="d9bf9ca7-4ef5-4367-9ee4-739c6b469096">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>557.0</x>
+        <y>377.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="59db078f-41dc-4225-a038-7459ded26607">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>d9bf9ca7-4ef5-4367-9ee4-739c6b469096</refId>
+          </destination>
+          <source>
+            <refId>d9bf9ca7-4ef5-4367-9ee4-739c6b469096</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
+  </steps>
+  <startSteps>2e86bcda-f736-4d7f-8b4c-476dd900a046</startSteps>
+</flow>

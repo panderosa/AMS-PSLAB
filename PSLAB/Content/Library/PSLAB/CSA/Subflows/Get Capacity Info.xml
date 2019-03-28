@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="222bf6c3-ef96-4fa6-b972-d167c95b0d82">
+  <descriptionCdata><![CDATA[222bf6c3-ef96-4fa6-b972-d167c95b0d82.0c4ac516-5125-4c10-a3e7-de0fdbabc66a.description=<pre>\nRetrieves the resource pool details.\n\nInputs\: \n    host - VMware vCenter, ESX or ESXi host hostname or IP.\n    user - The VMware username.\n    password - The VMware user's password. \n    port - The Port to connect to the VMware server. \n    protocol - The connection protocol.\nValid values\: "https", "http"\n    closeSession - Specifies whether to close the internally kept VMwware Infrastructure API session when the operation completes. \nValid values\: "true", "false"\n    datacenter - Datacenter of the host system or cluster.\n     hsIdentifierType - Host system identifier type.\nValid values\: name, hostname, ip, hostid\n    hostSystem - Host system identifier based on the hsIdentifier Type.\nExamples\: "nameOfHostSystem" (name, as seen in vSphere client), "nameofHostSystem.domain.com" (hostname), 11.22.33.44 (ip), host-1234 (hostid)\n    clusterName - Name of the VMWare DRS cluster.  Can be specified instead of hostSystem if the resource pool is in a DRS cluster.\nExamples\: "nameOfCluster" (name as seen in vSphere client).\n     resourcePoolIdentifierType - Resource pool identifier type.\nValid values\: name, respoolid, inventorypath\n     resourcePool - Resource pool identifier based on the resourcePoolIdentifierType. Inventorypath (Datacenter/host/ComputeResource/Resources/ResourcePool name), Name of resource pool (Resource pool names are delimited by a forward slash "/".  For the root resource pool, specify "Resources" or a single "/") or RespoolID (resgroup-2566).\nExample\: test_respool1/test_respool2       (This is an example when resourcePoolIdentifierType is name)\n\nResults\:\n    returnResult - Resource Pool ID (respoolID) or reason for failure.\n    respoolID - The ID of the resource pool.\n    respoolParent - The parent of the resource pool.\n    respoolPath - The path of the resource pool starting from the parent resource pool of the specified compute resource.\n    respoolChildren - The direct children (resource pools and VMs) of the resource pool.\n    cpuSharesLevel - The cpu shares allocation level. \n    cpuShares - The number of cpu shares allocated. \n    cpuExpandableReservation - True if the cpu has expandable reservation.\n    cpuReservation - Amount of cpu resources allocated for the resource pool. Units are MHz for CPU.\n    cpuLimit - The limit for the resource pool cpu resource utilization. If -1, then there is no fixed limit on resource usage. Units are MHz for CPU.\n    memSharesLevel - The memory shares allocation level. \n    memShares - The number of memory shares allocated. \n    memExpandableReservation - True if the memory has expandable reservation.\n    memReservation - Amount of memory resources allocated for the resource pool. Units are MB for memory.\n    memLimit - The limit for the resource pool memory resource utilization. If -1, then there is no fixed limit on resource usage. Units are MB for memory.\n    overallStat - The overall status of the resource pool.\n\nResponses\: \n    success - The operation succeeded.\n    failure - Failed to retrieve the resource pool details. \n\nNotes\:\nInventory Path Formatting\:  The inventory path will be\: <name of datacenter>/host/<compute resource>/Resources/<name of resource pool> . The <compute resource> and <name of resource> part of the path is based on the "Hosts and Clusters" view in the vCenter client. The inventory path is case sensitive.\n</pre>
+222bf6c3-ef96-4fa6-b972-d167c95b0d82.11957b48-35c5-4d5d-aa9a-52c61b6f17cc.prompt=VMWare Host\:
+222bf6c3-ef96-4fa6-b972-d167c95b0d82.4a0e6213-7fcc-4a3c-be9b-07d1f8632a8c.prompt=Target datacenter\:
+222bf6c3-ef96-4fa6-b972-d167c95b0d82.5eddf587-3af7-41ab-80f0-c8378569024b.prompt=Datacenter\:
+222bf6c3-ef96-4fa6-b972-d167c95b0d82.68933c6a-606c-414c-8975-012284f66993.description=<pre>Retrieve information about a datastore Cluster or a set of datastoreClusters in a datacenter. If the name of the datastore cluster is provided the operation returns the information of the specified datastore cluster.\nInputs\:\n    host - The VMware host hostname or IP address.\n    user - The VMware username.\n    password - The VMware user's password. \n    port - The port to connect to the VMware server. \n    protocol - The connection protocol.\nValid values\: "https", "http"\n    closeSession - Specifies whether to close the internally kept VMwware Infrastructure API session when the operation completes. \nValid values\: "true", "false"\n    datacenter - The datacenter of the datastore cluster.\n    dataStoreCluster - The name of the datastore cluster.\n\nResponses\:\n    no more - There are no more results to retrieve.\n    success - The operation completed successfully.\n    failure - Something went wrong.\n\nReturns\:\n    returnResult - The name of the datastore Cluster.\n    capacity - Total capacity of this datastore Cluster, in megaBytes. This value is the sum of the capacity of all datastores that are part of this storage pod, and is updated periodically by the server.\n    freeSpace - Total free space on this datastore Cluster, in megaBytes.This value is the sum of the free space on all datastores that are part of this datastore Cluster, and is updated periodically by the server.\n</pre>
+222bf6c3-ef96-4fa6-b972-d167c95b0d82.728794f3-3625-4cd3-ba43-9867228aca83.prompt=Resource Pool\:
+222bf6c3-ef96-4fa6-b972-d167c95b0d82.c0b681da-ca73-46f8-a5a6-479237c1fbcb.prompt=VMWare Host\:
+]]></descriptionCdata>
+  <annotation></annotation>
+  <name>Get Capacity Info</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="b08b6563-85b8-4065-8928-dc7f0c59478b">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="1839b696-fc69-41c0-92a2-f4968ceac47b">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="0d9dd20b-5c91-4544-b955-8c8c5997a35b">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="83746c32-c857-4c01-8a54-aefdbfbdf977">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="0c4ac516-5125-4c10-a3e7-de0fdbabc66a">
+      <annotation>222bf6c3-ef96-4fa6-b972-d167c95b0d82.0c4ac516-5125-4c10-a3e7-de0fdbabc66a.description</annotation>
+      <name>Get Resource Pool Details</name>
+      <bounds>
+        <x>99.0</x>
+        <y>193.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <iconSpec id="ae43ad38-75c2-4df5-b6a6-e1a822922953">
+        <baseIcon>cubes_blue.png</baseIcon>
+        <basePath>/Others/</basePath>
+        <readOnly>false</readOnly>
+        <layers>
+          <iconSpec id="ba8a7e3d-8e76-4f7e-83a5-e43957cfea65">
+            <baseIcon>find.png</baseIcon>
+            <basePath>/Annotations/</basePath>
+            <readOnly>false</readOnly>
+            <layers/>
+          </iconSpec>
+        </layers>
+      </iconSpec>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <userInputBinding id="11957b48-35c5-4d5d-aa9a-52c61b6f17cc">
+          <annotation></annotation>
+          <fromContextKey>PSLAB VCenter Host</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>host</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt>222bf6c3-ef96-4fa6-b972-d167c95b0d82.11957b48-35c5-4d5d-aa9a-52c61b6f17cc.prompt</prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+        <identityBinding id="502e7b08-db8b-47cf-9b8d-4f6624800210">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>user</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>c9f7be19-8a4d-4d9d-8177-8b3acbdb924b</refId>
+            <refName>PSLAB VCenter Account</refName>
+          </link>
+          <identityAttribute>USERNAME</identityAttribute>
+        </identityBinding>
+        <identityBinding id="fed8b7c1-2f04-4a9d-9afe-a02d5f9def67">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>password</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>c9f7be19-8a4d-4d9d-8177-8b3acbdb924b</refId>
+            <refName>PSLAB VCenter Account</refName>
+          </link>
+          <identityAttribute>PASSWORD</identityAttribute>
+        </identityBinding>
+        <staticBinding id="6c66bf31-4765-48dc-829f-79b6601aa871">
+          <annotation></annotation>
+          <fromContextKey>PSLAB VCenter Port</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>port</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>443</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="074d544b-61e0-4435-badf-2857a28638f6">
+          <annotation></annotation>
+          <fromContextKey>PSLAB VCenter Protocol</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>protocol</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>https</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="1e00feef-5d65-497c-ad54-e44c2c37302f">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>closeSession</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>True</value>
+          <record>false</record>
+        </staticBinding>
+        <userInputBinding id="4a0e6213-7fcc-4a3c-be9b-07d1f8632a8c">
+          <annotation></annotation>
+          <fromContextKey>PSLAB VM Datacenter</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>datacenter</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt>222bf6c3-ef96-4fa6-b972-d167c95b0d82.4a0e6213-7fcc-4a3c-be9b-07d1f8632a8c.prompt</prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+        <staticBinding id="6e0aadf6-8e59-4b01-938a-39c3161ddd91">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>hsIdentifierType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>hostname</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="baa48a21-57af-419e-9608-bcb87c23e1f9">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>hostSystem</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="da41e269-f652-4f22-838c-e5be6f702cf8">
+          <annotation></annotation>
+          <fromContextKey>PSLAB VM ClusterName</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>clusterName</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="2563955a-5d0c-48a6-85d5-5bee082cd784">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>resourcePoolIdentifierType</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>name</value>
+          <record>false</record>
+        </staticBinding>
+        <userInputBinding id="728794f3-3625-4cd3-ba43-9867228aca83">
+          <annotation></annotation>
+          <fromContextKey>PSLAB VM Root Resource Pool</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>resourcePool</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt>222bf6c3-ef96-4fa6-b972-d167c95b0d82.728794f3-3625-4cd3-ba43-9867228aca83.prompt</prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+      </bindings>
+      <transitions>
+        <transition id="5a76db0c-68c0-4f14-b821-a40658fa7628">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>c847b9d2-fe00-4e58-9540-b7c474bcfdbb</refId>
+          </destination>
+          <source>
+            <refId>0c4ac516-5125-4c10-a3e7-de0fdbabc66a</refId>
+          </source>
+          <positions>
+            <point>
+              <x>233.0</x>
+              <y>148.0</y>
+            </point>
+            <point>
+              <x>465.0</x>
+              <y>230.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="a155f00f-23e3-494f-941d-ead079235f88">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>68933c6a-606c-414c-8975-012284f66993</refId>
+          </destination>
+          <source>
+            <refId>0c4ac516-5125-4c10-a3e7-de0fdbabc66a</refId>
+          </source>
+          <positions>
+            <point>
+              <x>149.0</x>
+              <y>227.0</y>
+            </point>
+            <point>
+              <x>258.0</x>
+              <y>89.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>64093629-510c-43de-b922-3a9d41100ce0</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="2cf7cd24-2575-4289-972f-980169df2969">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>memAvailableReservation</contextKey>
+          <expression id="07fa7f49-0764-4017-99cf-af31432af19e">
+            <annotation></annotation>
+            <name>Result Field: memAvailableReservation</name>
+            <fieldName>memAvailableReservation</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="f2da465f-70d1-4293-96dd-b8b185f60c85">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>memUsedReservation</contextKey>
+          <expression id="26fad77f-c455-4948-a839-a97e5f2337b6">
+            <annotation></annotation>
+            <name>Result Field: memUsedReservation</name>
+            <fieldName>memUsedReservation</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="8cd16a15-fe2c-4bb8-bbca-bed79ef3d3f6">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>cpuAvailableReservation</contextKey>
+          <expression id="8e7be82c-ed67-4768-99d9-7356d2e3fa5d">
+            <annotation></annotation>
+            <name>Result Field: cpuAvailableReservation</name>
+            <fieldName>cpuAvailableReservation</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="74886862-69d9-4e28-a854-3c16b36864e1">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>cpuUsedReservation</contextKey>
+          <expression id="e171d0a1-0ba6-4033-a9d3-fa973cf8654f">
+            <annotation></annotation>
+            <name>Result Field: cpuUsedReservation</name>
+            <fieldName>cpuUsedReservation</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="c847b9d2-fe00-4e58-9540-b7c474bcfdbb">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>415.0</x>
+        <y>196.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="50bb9ca2-091d-4ad5-b8be-b69c73695f4b">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>c847b9d2-fe00-4e58-9540-b7c474bcfdbb</refId>
+          </destination>
+          <source>
+            <refId>c847b9d2-fe00-4e58-9540-b7c474bcfdbb</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments/>
+    </returnStep>
+    <step id="68933c6a-606c-414c-8975-012284f66993">
+      <annotation>222bf6c3-ef96-4fa6-b972-d167c95b0d82.68933c6a-606c-414c-8975-012284f66993.description</annotation>
+      <name>Get Datastore Clusters</name>
+      <bounds>
+        <x>208.0</x>
+        <y>55.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <iconSpec id="5b6258fb-9565-4d6b-b6cd-027c2c445f50">
+        <baseIcon>database_cluster.png</baseIcon>
+        <basePath>/Databases/</basePath>
+        <readOnly>false</readOnly>
+        <layers/>
+      </iconSpec>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <userInputBinding id="c0b681da-ca73-46f8-a5a6-479237c1fbcb">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VCenter Host</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>host</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt>222bf6c3-ef96-4fa6-b972-d167c95b0d82.c0b681da-ca73-46f8-a5a6-479237c1fbcb.prompt</prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+        <identityBinding id="847eb719-07cf-40ff-ae2c-36c6396db436">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey></fromContextKey>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>user</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>c9f7be19-8a4d-4d9d-8177-8b3acbdb924b</refId>
+            <refName>PSLAB VCenter Account</refName>
+          </link>
+          <identityAttribute>USERNAME</identityAttribute>
+        </identityBinding>
+        <identityBinding id="a33291a4-71c4-4452-8e50-81b438c9d24a">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey></fromContextKey>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>ENCRYPTED</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>password</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <link>
+            <refId>c9f7be19-8a4d-4d9d-8177-8b3acbdb924b</refId>
+            <refName>PSLAB VCenter Account</refName>
+          </link>
+          <identityAttribute>PASSWORD</identityAttribute>
+        </identityBinding>
+        <staticBinding id="a7480b03-231e-4f30-984e-33b082c06e38">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VCenter Port</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>port</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>443</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="34ebfdfa-e8ca-49c1-9d8f-997eccbd0ff9">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VCenter Protocol</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>protocol</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>https</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="648bfe63-39c8-4c48-bc2a-755d468b18ca">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey></fromContextKey>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>closeSession</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>True</value>
+          <record>false</record>
+        </staticBinding>
+        <userInputBinding id="0cc3baaf-b4ec-4793-85df-f05ea9c19450">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VM Datastore</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>false</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>dataStoreCluster</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt></prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+        <userInputBinding id="5eddf587-3af7-41ab-80f0-c8378569024b">
+          <annotation></annotation>
+          <toContextKey></toContextKey>
+          <fromContextKey>PSLAB VM Datacenter</fromContextKey>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>datacenter</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <record>false</record>
+          <prompt>222bf6c3-ef96-4fa6-b972-d167c95b0d82.5eddf587-3af7-41ab-80f0-c8378569024b.prompt</prompt>
+          <isMultiSelect>false</isMultiSelect>
+          <sourceDelimiter>|</sourceDelimiter>
+        </userInputBinding>
+      </bindings>
+      <transitions>
+        <transition id="f431a3b0-4f1b-4cec-b03b-4a2cc786a3d9">
+          <annotation></annotation>
+          <name>no more</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>no more</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>72d99ba6-911d-49e8-a2f3-9250c611d7f9</refId>
+          </destination>
+          <source>
+            <refId>68933c6a-606c-414c-8975-012284f66993</refId>
+          </source>
+          <positions>
+            <point>
+              <x>258.0</x>
+              <y>89.0</y>
+            </point>
+            <point>
+              <x>463.0</x>
+              <y>96.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="48eb9037-a52a-4270-8930-f5f02c4e205a">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>72d99ba6-911d-49e8-a2f3-9250c611d7f9</refId>
+          </destination>
+          <source>
+            <refId>68933c6a-606c-414c-8975-012284f66993</refId>
+          </source>
+          <positions>
+            <point>
+              <x>258.0</x>
+              <y>89.0</y>
+            </point>
+            <point>
+              <x>318.81821267994263</x>
+              <y>66.06214904536031</y>
+            </point>
+            <point>
+              <x>403.88810992029624</x>
+              <y>68.96697480478701</y>
+            </point>
+            <point>
+              <x>463.0</x>
+              <y>96.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="4477a188-19f4-48b8-959c-1d0e7e375256">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>c847b9d2-fe00-4e58-9540-b7c474bcfdbb</refId>
+          </destination>
+          <source>
+            <refId>68933c6a-606c-414c-8975-012284f66993</refId>
+          </source>
+          <positions>
+            <point>
+              <x>258.0</x>
+              <y>89.0</y>
+            </point>
+            <point>
+              <x>465.0</x>
+              <y>230.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>5e6a536d-75a8-4f7e-9649-7ae6ea1c8472</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="def5e7c4-ab5b-4817-adb1-20840a272ca7">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>freeSpace</contextKey>
+          <expression id="7b0d1c46-41de-4c10-9c93-e21121628f8e">
+            <annotation></annotation>
+            <name>Result Field: freeSpace</name>
+            <fieldName>freeSpace</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="558815c1-c619-4d69-8868-aa63d8ebad84">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>capacity</contextKey>
+          <expression id="93bfcbd1-a672-468d-a033-023500fbc5c0">
+            <annotation></annotation>
+            <name>Result Field: capacity</name>
+            <fieldName>capacity</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="72d99ba6-911d-49e8-a2f3-9250c611d7f9">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>413.0</x>
+        <y>62.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="975d07d9-dfa6-4ccf-83fc-a24a577f3d4d">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>72d99ba6-911d-49e8-a2f3-9250c611d7f9</refId>
+          </destination>
+          <source>
+            <refId>72d99ba6-911d-49e8-a2f3-9250c611d7f9</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
+  </steps>
+  <startSteps>0c4ac516-5125-4c10-a3e7-de0fdbabc66a</startSteps>
+</flow>

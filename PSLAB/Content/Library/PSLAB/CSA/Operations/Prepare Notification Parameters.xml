@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="727188f5-a61a-4740-b957-59e7c6a57764">
+  <descriptionCdata><![CDATA[727188f5-a61a-4740-b957-59e7c6a57764.description=<pre>This is an operation that does nothing. It can be used for filtering flow variables by feeding them in as inputs and filtering them on the results tab.\n\nResponses\:\n    success\n    failure\n</pre>
+]]></descriptionCdata>
+  <annotation>727188f5-a61a-4740-b957-59e7c6a57764.description</annotation>
+  <name>Prepare Notification Parameters</name>
+  <categories/>
+  <inputs/>
+  <possibleResponses>
+    <opResponse id="aaab823e-708e-44a0-a22d-6f4e4ea2ddbf">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="fd3b4650-039b-4884-8d4d-cae14226316c">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>true</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="b630c204-89a7-412d-9223-591e06025719">
+    <annotation></annotation>
+    <name>returnResult</name>
+    <fieldName>returnResult</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="c1e5e52f-3e61-4ca6-bcc4-6dc2107d54e3">
+    <baseIcon>display_report.png</baseIcon>
+    <basePath>Utilities/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>5233030c-af46-432b-a682-b326ca6bf2ae</refName>
+  </groupAliasRef>
+  <overrideGroupAlias>${overrideJRAS}</overrideGroupAlias>
+</operation>
