@@ -1494,7 +1494,7 @@ function getServerConfiguration(input) {
 	var endDate = Math.round(properties[&apos;endDate&apos;]/1000);
 	// MS SQL
 	//var sql = &quot;select DATEADD(s,&quot; + startDate + &quot;,&apos;1970-01-01 02:00:00&apos;) START_DATE,DATEADD(s,&quot; + endDate + &quot;,&apos;1970-01-01 02:00:00&apos;) END_DATE&quot;;
-	
+	var sql = &quot;select date &apos;1970-01-01 00:00:00&apos; + interval &apos;&quot; + startDate + &quot; seconds&apos; START_DATE, select date &apos;1970-01-01 00:00:00&apos; + interval &apos;&quot; + endDate + &quot; seconds&apos; END_DATE&quot;;
 	scriptletResult = sql;
 	scriptletContext.put(&quot;SQL&quot;,sql);
 	scriptletResponse = &quot;success&quot;;
