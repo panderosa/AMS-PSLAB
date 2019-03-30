@@ -12,13 +12,14 @@
   <inputs>
     <userInputBinding id="8f342262-5a95-4118-ab80-b05f1cbe7113">
       <annotation></annotation>
+      <fromContextKey>subscriptionId</fromContextKey>
       <assignFromContext>true</assignFromContext>
       <assignToContext>false</assignToContext>
       <inputType>STRING</inputType>
       <isList>false</isList>
       <required>false</required>
       <isPersisted>true</isPersisted>
-      <inputSymbol>requestId</inputSymbol>
+      <inputSymbol>subscriptionId</inputSymbol>
       <listDelimiter>,</listDelimiter>
       <record>false</record>
       <prompt></prompt>
